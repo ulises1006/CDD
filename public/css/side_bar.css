@@ -1,0 +1,63 @@
+#menu_lateral{
+    position: fixed;
+    float: left;
+    height: 100%;
+    background-color: #fff;
+    border-right: 1px solid #2474BF;
+    box-shadow: 0 0 25px rgba(0,0,0,0.25);
+  }
+  #boton_contenedor{
+    margin-top: 40px;
+  }
+  #contenido_principal{
+      margin-top: 30px !important;
+      margin: auto;
+      height: 100%!important;
+      /*background-color: #F1ECE9;*/
+  }
+  #titulo_principal{
+      font-size: 35px;
+      color:#fff;
+  }
+  #item-menu{
+    font-size: 35px;
+}
+#menu_lateral ul,
+#menu_lateral ul li{
+    float: left;
+    width: 100%;
+    margin-top: 15px;
+    padding-left: 10px;
+}
+#menu_lateral ul li a h3{
+    float: left;
+    font: 20px 'Fredoka One', cursive;
+    color: #000000;
+}
+
+#contenedor_fecha {
+    height: 30% !important;
+}
+#contenedor_dia{
+    margin: auto;
+}
+
+
+
+.dia-label{
+    font-size: 80px;
+    text-align: center;
+    font-weight: 900;
+    margin-bottom: 0;
+}
+.mes-label{
+    font-size: 35px;
+    margin-top: 5px;
+    margin-bottom: 0;
+    font-weight: 500;
+}
+.anio-label{
+    font-size: 35px;
+    margin-bottom: 0;
+    font-weight: 500;
+}
