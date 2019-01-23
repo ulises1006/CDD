@@ -2,8 +2,8 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <div class="card">
-                <div id="contenedor_fecha" class="card-body">
+            <div class="card indigo darken-1">
+                <div id="contenedor_fecha" class="card-content white-text">
                     @if (session('status'))
                     <div class="alert alert-success" role="alert">
                         {{ session('status') }}
@@ -23,4 +23,6 @@
         </div>
     </div>
 </div>
+
 @endsection
+

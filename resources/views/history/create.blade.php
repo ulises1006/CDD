@@ -1,5 +1,5 @@
 @extends('layouts.app') @section('content')
-<div style="margin-left:35px;" class="container">
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-12">
                 <div style="text-align:center;" class="justify-content-center">
@@ -21,7 +21,7 @@
                             </div>
                             <div class="input-field col s4">
                                 <label id="label-form" for="age">{{ __('Edad') }}</label>
-                                <input id="age" type="number" class="form-control{{ $errors->has('age') ? ' is-invalid' : '' }}" name="age" value="{{ old('age') }}"> 
+                                <input id="age" type="text" class="form-control{{ $errors->has('age') ? ' is-invalid' : '' }}" name="age" value="{{ old('age') }}"> 
                                 @if ($errors->has('age'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('age') }}</strong>
@@ -97,7 +97,7 @@
                         <div class="row">
                             <div class="input-field col s6">
                                 <label id="label-form" for="birthday">{{ __('Fecha de nacimiento') }}</label>
-                                <input id="birthday" type="date" name="birthday" class="datepicker"> 
+                                <input id="birthday" type="text" name="birthday" class="datepicker"> 
                                 @if ($errors->has('birthday'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('birthday') }}</strong>

@@ -29,7 +29,8 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel blue darken-3">
+        <div class="navbar-fixed">
+        <nav id="nav_bar" class="navbar navbar-expand-md navbar-light navbar-laravel blue darken-4">
             <div class="container">
                 <a id="titulo_principal" class="navbar-brand" href="{{ url('/') }}">
                     Centro Dental Durango
@@ -51,11 +52,7 @@
                             <li class="nav-item">
                                 <a style="font-size:18px; color:#fff;" class="nav-link" href="{{ route('login') }}">{{ __('Iniciar sesión') }}</a>
                             </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a style="font-size:18px; color:#fff;" class="nav-link" href="{{ route('register') }}">{{ __('Registro') }}</a>
-                                </li>
-                            @endif
+                           
                         @else
                             <li class="nav-item dropdown">
                             
@@ -80,15 +77,20 @@
                 </div>
             </div>
         </nav>
-
+    </div>
+        @guest
+                
+        @else
+        @include('layouts.side_menu')
+        @endguest
         <main class="py-4">
             <div class="row">
                 @guest
                 
                 @else
-                <div class="col-md-3 pull-left">
-                        @include('layouts.side_menu')
-                    </div>
+                <div style="border: 0;" class="col-md-2 pull-left white">
+                        
+                </div>
                 @endguest
                 <div class="col-md-9" id="contenido_principal">
                     @yield('content')
@@ -96,9 +98,10 @@
             </div>
         </main>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    @yield('foot')
+    <script type="text/javascript" src="{{ asset('https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
-   
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var elems = document.querySelectorAll('.sidenav');
@@ -106,10 +109,34 @@
             
             var elems = document.querySelectorAll('select');
             var instances = M.FormSelect.init(elems);
+            
+            // var elems = document.querySelectorAll('.datepicker');
+            // var instances = M.Datepicker.init(elems);
 
-            var elems = document.querySelectorAll('checkbox');
-    var instances = M.FormCheckbox.init(elems);
-        });
-    </script>    
+            // $.extend($.fn.pickadate.defaults, {
+            //     monthsFull: [ 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre' ],
+            //     monthsShort: [ 'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic' ],
+            //     weekdaysFull: [ 'domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado' ],
+            //     weekdaysShort: [ 'dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb' ],
+            //     today: 'hoy',
+            //     clear: 'borrar',
+            //     close: 'cerrar',
+            //     firstDay: 1,
+            //     format: 'dddd d !de mmmm !de yyyy',
+            //     formatSubmit: 'yyyy/mm/dd'
+            // });
+
+            var elems = document.querySelectorAll('.modal');
+            var instances = M.Modal.init(elems);
+            
+         
+            });
+
+
+         $(document).ready(function(){
+         $('.modal').modal();
+         });
+    </script>  
+
 </body>
 </html>

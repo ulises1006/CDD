@@ -18,3 +18,11 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 Route::get('/', 'HomeController@index')->name('home');
+
+Route::resource('/patient', 'PatientController');
+
+Route::resource('/history', 'HistoryController');
+
+Route::resource('/treatment', 'TreatmentController');
+
+Route::resource('/payment', 'PaymentController');
