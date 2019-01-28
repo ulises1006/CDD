@@ -18,6 +18,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -99,7 +100,7 @@
         </main>
     </div>
     @yield('foot')
-    <script type="text/javascript" src="{{ asset('https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js') }}"></script>
+    
     <script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
     
     <script>
@@ -110,32 +111,73 @@
             var elems = document.querySelectorAll('select');
             var instances = M.FormSelect.init(elems);
             
-            // var elems = document.querySelectorAll('.datepicker');
-            // var instances = M.Datepicker.init(elems);
+            var elems = document.querySelectorAll('.datepicker');
+            var options = {
+                format: 'dd/mm/yyyy',
+                yearRange: 20,
+                i18n: {
+                    months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                    weekdays: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                    weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+                    weekdaysAbbrev: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+                    selectMonths: true,
+                    selectYears: 100, // Puedes cambiarlo para mostrar más o menos años
+                    today: 'Hoy',
+                    clear: 'Limpiar',
+                    cancel: 'Cancelar',
+                    done: 'Aceptar',
+                    previousMonth: '<',
+                    nextMonth: '>',
+                    formatSubmit: 'dd/mm/yyyy'
+                }
+            };
+            var instances = M.Datepicker.init(elems,options);
 
-            // $.extend($.fn.pickadate.defaults, {
-            //     monthsFull: [ 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre' ],
-            //     monthsShort: [ 'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic' ],
-            //     weekdaysFull: [ 'domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado' ],
-            //     weekdaysShort: [ 'dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb' ],
-            //     today: 'hoy',
-            //     clear: 'borrar',
-            //     close: 'cerrar',
-            //     firstDay: 1,
-            //     format: 'dddd d !de mmmm !de yyyy',
-            //     formatSubmit: 'yyyy/mm/dd'
-            // });
 
             var elems = document.querySelectorAll('.modal');
             var instances = M.Modal.init(elems);
             
          
             });
-
-
-         $(document).ready(function(){
-         $('.modal').modal();
-         });
+           
+            // $(document).ready(function(){
+            //     $('.datepicker').datepicker({
+            //         monthsFull: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            //         monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            //         weekdaysFull: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            //         weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+            //         selectMonths: true,
+            //         selectYears: 100, // Puedes cambiarlo para mostrar más o menos años
+            //         today: 'Hoy',
+            //         clear: 'Limpiar',
+            //         close: 'Ok',
+            //         labelMonthNext: 'Siguiente mes',
+            //         labelMonthPrev: 'Mes anterior',
+            //         labelMonthSelect: 'Selecciona un mes',
+            //         labelYearSelect: 'Selecciona un año',
+            //         formatSubmit: 'yyyy/mm/dd'
+            //     });
+       
+            // });
+            
+            // $('.datepicker').pickadate({
+            //     monthsFull: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            //     monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            //     weekdaysFull: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            //     weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+            //     selectMonths: true,
+            //     selectYears: 100, // Puedes cambiarlo para mostrar más o menos años
+            //     today: 'Hoy',
+            //     clear: 'Limpiar',
+            //     close: 'Ok',
+            //     labelMonthNext: 'Siguiente mes',
+            //     labelMonthPrev: 'Mes anterior',
+            //     labelMonthSelect: 'Selecciona un mes',
+            //     labelYearSelect: 'Selecciona un año',
+            //     formatSubmit: 'yyyy/mm/dd'
+            // });
+       
     </script>  
 
 </body>

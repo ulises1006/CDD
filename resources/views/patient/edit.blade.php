@@ -1,5 +1,5 @@
 @extends('layouts.app') @section('content')
-<div class="container">
+<div style="margin-left:30px;" class="container">
     <div class="row justify-content-center">
         <div class="col-12">
                 <div style="text-align:center;" class="justify-content-center">
@@ -22,7 +22,7 @@
                             </div>
                             <div class="input-field col s4">
                                 <label id="label-form" for="age">{{ __('Edad') }}</label>
-                                <input id="age" type="text" class="form-control{{ $errors->has('age') ? ' is-invalid' : '' }}" name="age" value="{{ $patient->age }}"> 
+                                <input id="age" type="number" class="form-control{{ $errors->has('age') ? ' is-invalid' : '' }}" name="age" value="{{ $patient->age }}"> 
                                 @if ($errors->has('age'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('age') }}</strong>

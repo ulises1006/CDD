@@ -97,7 +97,7 @@
                         <div class="row">
                             <div class="input-field col s6">
                                 <label id="label-form" for="birthday">{{ __('Fecha de nacimiento') }}</label>
-                                <input id="birthday" type="date" name="birthday" class="datepicker"> 
+                                <input id="birthday" type="text" value="" name="birthday" class="datepicker"> 
                                 @if ($errors->has('birthday'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('birthday') }}</strong>

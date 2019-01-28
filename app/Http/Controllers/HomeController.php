@@ -23,6 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        
         $dia = date('d');
         $m = date('M');
         if ($m == 'Jan'){
@@ -52,7 +53,7 @@ class HomeController extends Controller
         }
 
         $anio = date('Y');
-        $fecha = date('d-m-Y');
+        $fecha = date('d/m/Y');
 
         return view('home', compact('dia','mes','anio','fecha'));
     }

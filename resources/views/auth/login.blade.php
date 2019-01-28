@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-7">
             <div class="card" style="height: 110%">
                 <div class="card-header" style="text-align: center; font-size: 26px; font-family: 'Nunito', sans-serif;">{{ __('Iniciar sesión') }}</div>
 

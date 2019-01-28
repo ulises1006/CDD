@@ -7,26 +7,24 @@
             <div class="right-align">
                 <a href="{{ Route('patient.create') }}" class="waves-effect blue btn-large right-align white-text"><i class="material-icons right">add_circle</i>Registrar paciente</a>
             </div>
-            <table style="margin-top:30px;" class="striped responsive-table">
+            <table style="margin-top:30px;" class="striped centered responsive-table">
                 <thead style="font-size:17px;font-weight:600;">
                     <tr>
-                        <th>Nombre completo</th>
-                        <th>Edad</th>
-                        <th>Dirección</th>
-                        <th>Código postal</th>
-                        <th>Fecha de nacimiento</th>
-                        <th>Sexo</th>
-                        <th>Ocupación</th>
-                        <th>Información</th>
+                        <th style="width:14%">Nombre completo</th>
+                        <th style="width:14%">Edad</th>
+                        <th style="width:14%">Dirección</th>
+                        <th style="width:14%">Fecha de nacimiento</th>
+                        <th style="width:14%">Sexo</th>
+                        <th style="width:14%">Ocupación</th>
+                        <th style="width:14%">Información</th>
                     </tr>
                 </thead>
-                <tbody class="centered">
+                <tbody>
                     @foreach($patients as $patient)
-                    <tr>
+                    <tr class="center-align">
                         <th>{{ $patient->name }}</th>
                         <th>{{ $patient->age }}</th>
                         <th>{{ $patient->address}}, {{ $patient->state }}</th>
-                        <th>{{ $patient->code }}</th>
                         <th>{{ $patient->birthday }}</th>
                         <th>{{ $patient->sex }}</th>
                         <th>{{ $patient->occupation }}</th>
@@ -34,8 +32,11 @@
                     </tr>
                     @endforeach
                 </tbody>
-            </table>            
-            {{ $patients->links()}}
+            </table>   
+            <div style="text-align:center" class="center-align">
+                {{ $patients->links()}}
+            </div>         
+            
         </div>
     </div>
 </div>

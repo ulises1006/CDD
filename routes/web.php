@@ -21,8 +21,14 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::resource('/patient', 'PatientController');
 
-Route::resource('/history', 'HistoryController');
+Route::get('/history/ver/{id}','ViewController@ver')->name('history.ver');
+
+Route::resource('history', 'HistoryController');
 
 Route::resource('/treatment', 'TreatmentController');
 
 Route::resource('/payment', 'PaymentController');
+
+Route::resource('/appointment', 'AppointmentController');
+
+Route::resource('/recipe', 'RecipeController');

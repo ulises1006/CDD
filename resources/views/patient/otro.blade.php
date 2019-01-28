@@ -15,4 +15,11 @@
             </span>
         @endif
 </div>
+protected $fillable = [
+        'name_patient','fecha','medicamento','doctor_id'
+    ];
+
+    public function doctor(){
+        $this->belongsTo('App\Doctor');
+    }
 
