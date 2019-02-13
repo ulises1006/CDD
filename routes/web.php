@@ -27,8 +27,18 @@ Route::resource('history', 'HistoryController');
 
 Route::resource('/treatment', 'TreatmentController');
 
-Route::resource('/payment', 'PaymentController');
+Route::group(['middleware'=>['web']], function (){
+    Route::resource('/payment', 'PaymentController');
+});
 
-Route::resource('/appointment', 'AppointmentController');
+Route::get('/pdf-receta', 'RecipeController@crearPdf');
+
+Route::get('/pdf-historia', 'HistoryController@historiaClinica');
+
+Route::group(['middleware'=>['web']], function (){
+    Route::resource('/appointment', 'AppointmentController');
+    Route::put('/appointment', 'AppointmentController@editar')->name('appointment.editar');
+    Route::get('appointment/{appointment}', 'AppointmentController@actualizar')->name('appointment.actualizar');
+});
 
 Route::resource('/recipe', 'RecipeController');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Patient;
+use App\History;
 use Illuminate\Http\Request;
 use Session;
 
@@ -79,7 +80,14 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
-        return view('patient.show', compact('patient'));
+        $history = History::where('id',$patient->id)->first();
+        if(empty($history)){
+            $history = "no";
+            return view('patient.show', compact('patient','history'));
+        }else{
+            return view('patient.show', compact('patient','history'));
+        }    
+        
     }
 
     /**

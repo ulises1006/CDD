@@ -2,7 +2,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-4">
-            <div class="card indigo darken-1">
+            <div style="background-color:#00618c" class="card">
                 <div id="contenedor_fecha" class="card-content white-text">
                     @if (session('status'))
                     <div class="alert alert-success" role="alert">
@@ -34,17 +34,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- @foreach($apointments as $appointment) --}}
+                    @foreach($appointments as $appointment)
                     <tr class="center-align">
-                        <th>10:30</th>
-                        <th>Ulises Mireles Cruz</th>
-                        <th>Cambio de ligas</th>
+                        <th>{{ $appointment->hour }}</th>
+                        <th>{{ $appointment->patient }}</th>
+                        <th>{{ $appointment->description }}</th>
                         <th>
-                            <a href="http://localhost/Odontograma/odontograma.php" class="waves-effect blue darken-3 btn-small white-text">
-                                <i class="material-icons ">assignment_turned_in</i></a>
+                            <a href="" class="waves-effect blue darken-3 btn-small white-text">
+                                <i class="material-icons ">assignment_turned_in</i>
+                            </a>
                         </th>
                     </tr>
-                    {{-- @endforeach --}}
+                    @endforeach
                 </tbody>
             </table>
         </div>

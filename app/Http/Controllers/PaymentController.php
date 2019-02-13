@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Payment;
+use App\Patient;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -14,7 +15,9 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        //
+        $patients=Patient::all();
+        $payments=Payment::paginate(10);
+        return view('payment.index', compact('payments', 'patients'));
     }
 
     /**
@@ -35,7 +38,20 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'monto' => 'required | integer',
+            'fecha' => 'required | date',
+            'tratamiento' => 'required | string',
+            'paciente' => 'required | integer',
+        ]);
+        $payment = new Payment;
+        $payment->monto = $request->monto;
+        $payment->fecha = $request->fecha;
+        $payment->tratamiento = $request->tratamiento;
+        $payment->patient_id =$request->paciente;
+        $payment->save();
+
+        return redirect()-> route('payment.index');
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Auth;
+use App\Appointment;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -53,8 +54,11 @@ class HomeController extends Controller
         }
 
         $anio = date('Y');
-        $fecha = date('d/m/Y');
+        $fecha = date('Y-m-d');
+        $doctor = Auth::user()->id;
 
-        return view('home', compact('dia','mes','anio','fecha'));
+        $appointments = Appointment::where(array('doctor_id'=>$doctor,'date'=>$fecha))->orderBy('hour', 'asc')->get();
+      
+        return view('home', compact('dia','mes','anio','fecha','appointments'));
     }
 }

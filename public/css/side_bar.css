@@ -44,6 +44,9 @@
       margin-top: 20px;
       font-size: 45px;
   }
+  #sidenav-2{
+      right: 0 !important;
+  }
   #icon{
       color: #fff;
   }

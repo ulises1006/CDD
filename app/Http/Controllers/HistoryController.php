@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\History;
+use App\Patient;
 use Illuminate\Http\Request;
 
 class HistoryController extends Controller
@@ -18,6 +19,11 @@ class HistoryController extends Controller
         return view('history.index', compact('history'));
     }
 
+    public function historiaClinica(){
+        $pdf = \PDF::loadView('historia_clinica');
+        // return view('receta');
+        return $pdf->stream();
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -88,10 +94,10 @@ class HistoryController extends Controller
         $history->save();
         
         $history2 = History::where('id', $request->id)->first(); 
-       
+        $patients = Patient::where('id', $request->id)->first();
 
         //Redireccionar
-        return redirect()-> route('history.show', $history2);
+        return redirect()-> route('history.show', $history2, $patients);
     }
 
     /**

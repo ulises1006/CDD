@@ -1,6 +1,6 @@
 @extends('layouts.app') @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div style="margin-left:15px;" class="row justify-content-center">
         <div class="col-8">
             <div class="card hoverable">
                 <div style="padding-bottom: 0;padding-top:0;" class="card-content black-text">
@@ -94,6 +94,70 @@
                 </div>
             </div>
         </div>
+        
+        <div class="col-4">
+            <div class="card hoverable">
+                <div style="padding-bottom: 0;padding-top:0;" class="card-content black-text">
+                    <div class="card-header"><h3>Datos importantes</h3></div>
+                    @if($history == 'no')
+                    <h4 style="margin-top:24px;margin-bottom:24px;">No hay datos registrados, por favor vaya a registrar la historia clinica</h4>
+                    @else
+                        <div style="margin-top:24px;" class="row">
+                            <div class="col-6">
+                                <h5 id="info_h5">Alergias: </h5>
+                            </div>
+                            <div id="info_p" class="col-6">{{ $history->alergias }}</div>
+                        </div>
+                        <div style="margin-top:24px;" class="row">
+                            <div class="col-6">
+                                <h5 id="info_h5">Medicamentos: </h5>
+                            </div>
+                            <div id="info_p" class="col-6">{{ $history->medicamentos }}</div>
+                        </div>
+                        @if($patient->sex == 'femenino')
+                        <div style="margin-top:24px;" class="row">
+                            <div class="col-6">
+                                <h5 id="info_h5">Embarazo: </h5>
+                            </div>
+                            <div id="info_p" class="col-6">{{ $history->embarazo }}</div>
+                        </div>
+                        
+                        @endif
+                    @endif
+                </div>
+            </div>
+            <div class="card hoverable">
+                    <div style="padding-bottom: 0;padding-top:0;" class="card-content black-text">
+                        <div class="card-header"><h3>Datos extra para facturación</h3></div>
+                        @if($patient->rfc == '')
+                        <h4 style="margin-top:24px;margin-bottom:24px;">No hay datos de facturacion registrados</h4>
+                        @else
+                            <div style="margin-top:24px;" class="row">
+                                <div class="col-6">
+                                    <h5 id="info_h5">Correo: </h5>
+                                </div>
+                                <div id="info_p" class="col-6">{{ $patient->email }}</div>
+                            </div>
+                            <div style="margin-top:24px;" class="row">
+                                <div class="col-6">
+                                    <h5 id="info_h5">RFC: </h5>
+                                </div>
+                                <div id="info_p" class="col-6">{{ $patient->rfc }}</div>
+                            </div>
+                            @if($patient->sex == 'femenino')
+                            <div style="margin-top:24px;" class="row">
+                                <div class="col-6">
+                                    <h5 id="info_h5">Embarazo: </h5>
+                                </div>
+                                <div id="info_p" class="col-6">{{ $history->embarazo }}</div>
+                            </div>
+                            
+                            @endif
+                        @endif
+                    </div>
+                </div>
+        </div>
+        
     </div>
 
     <div style="margin-top:50px; margin-left:40px;" class="row">
@@ -108,7 +172,7 @@
                         encuentra tomando medicamento actualmente</p>
                 </div>
                 <div style="text-align:center;margin-bottom:18px;margin-top:18px;">
-                    <a class="waves-effect blue darken-3 btn" href="/history/ver/{{ $patient->id }}">Registrar</a>
+                    <a style="background_color:#0190dc !important;" class="waves-efect blue darken-3 btn" href="/history/ver/{{ $patient->id }}">Registrar</a>
                 </div>
             </div>
         </div>

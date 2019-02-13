@@ -3,18 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Appointment;
+use Auth;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Redirect;
+use Calendar;
 
 class AppointmentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    } 
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $rol = Auth::user()->role;
+        $appointments = Appointment::get();
+        return view('appointment.index',compact('appointments','rol'));
     }
 
     /**
@@ -35,7 +45,46 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $doctor_id;
+        if(Auth::user()->role == "secretaria"){
+            $doctor_id = $request->doctor;
+        }else{
+            $doctor_id = Auth::user()->id;
+        }
+        
+        $this->validate($request,[
+            'paciente' => 'required | string',
+            'fecha' => 'required | date',
+            'hora' => 'required | string',
+            'description' => 'required | string',
+        ]);
+        $minutoAnadir=30;
+        $segundos_horaInicial=strtotime($request->hora);
+        $segundos_minutoAnadir=$minutoAnadir*60;
+        $nuevaHora=date("H:i",$segundos_horaInicial+$segundos_minutoAnadir);
+        
+        $checkHour = Appointment::where(array('date'=>$request->fecha,'hour'=>$request->hora))->get();
+        
+        if($checkHour->isEmpty()){
+            $appointment = new Appointment;
+            $appointment->patient = $request->paciente;
+            $appointment->date = $request->fecha;
+            $appointment->hour = $request->hora;
+            $appointment->hour_end = $nuevaHora;
+            $appointment->description = $request->description;
+            $appointment->doctor_id = $doctor_id;
+            $appointment->save(); 
+            
+            //Redireccionar
+            return redirect()-> route('appointment.index')->with('success', 'Cita registrada correctamente');
+        }else{
+            return redirect()-> route('appointment.index')->with('alert', 'Esa hora ya esta asignada');
+        }
+       
+        
+
+       
+       
     }
 
     /**
@@ -57,9 +106,65 @@ class AppointmentController extends Controller
      */
     public function edit(Appointment $appointment)
     {
-        //
+        
     }
+    public function editar(Request $request)
+    {
+        $minutoAnadir=30;
+        $segundos_horaInicial=strtotime($request->hora);
+        $segundos_minutoAnadir=$minutoAnadir*60;
+        $nuevaHora=date("H:i",$segundos_horaInicial+$segundos_minutoAnadir);
 
+        $checkHour = Appointment::where(array('date'=>$request->fecha,'hour'=>$request->hora))->get();
+
+        if($checkHour->isEmpty()){
+            $this->validate($request,[
+                    'paciente' => 'required | string',
+                    'fecha' => 'required | date',
+                    'hora' => 'required | string',
+                    'descripcion' => 'required | string',
+                ]);
+            $appointment = Appointment::where('id',$request->id)->update([
+            'patient'=>$request->paciente,
+            'date'=>$request->fecha,
+            'hour'=>$request->hora,
+            'hour_end'=>$nuevaHora,
+            'description'=>$request->descripcion
+            ]);
+        return redirect()-> route('appointment.index')->with('success', 'Cita modificada correctamente');
+        }else{
+            return redirect()-> route('appointment.index')->with('alert', 'Esa hora ya esta asignada');
+        }
+
+        // $appointment->save(); 
+        // $this->validate($request,[
+        //     'paciente' => 'required | string',
+        //     'fecha' => 'required | date',
+        //     'hora' => 'required | string',
+        //     'description' => 'required | string',
+        // ]);
+        // $minutoAnadir=30;
+        // $segundos_horaInicial=strtotime($request->hora);
+        // $segundos_minutoAnadir=$minutoAnadir*60;
+        // $nuevaHora=date("H:i",$segundos_horaInicial+$segundos_minutoAnadir);
+        // $checkHour = Appointment::where(array('date'=>$request->fecha,'hour'=>$request->hora))->get();
+
+        // if($checkHour->isEmpty()){
+        //     $appointment = Appointment::where('id',$request->id)->update(['patient'=>$request->paciente]);
+        //     $appointment->patient = $request->paciente;
+        //     $appointment->date = $request->fecha;
+        //     $appointment->hour = $request->hora;
+        //     $appointment->hour_end = $nuevaHora;
+        //     $appointment->description = $request->description;
+        //     $appointment->save(); 
+            
+        //     //Redireccionar
+        //     return redirect()-> route('appointment.index')->with('success', 'Cita modificada correctamente');
+        // }else{
+        //     return redirect()-> route('appointment.index')->with('alert', 'Esa hora ya esta asignada');
+        // }
+    }
+    
     /**
      * Update the specified resource in storage.
      *
@@ -69,7 +174,7 @@ class AppointmentController extends Controller
      */
     public function update(Request $request, Appointment $appointment)
     {
-        //
+        
     }
 
     /**

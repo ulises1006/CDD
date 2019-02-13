@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\History;
+use App\Patient;
 use Illuminate\Http\Request;
 
 class ViewController extends Controller
@@ -13,7 +14,8 @@ class ViewController extends Controller
     public function ver($id){
         $history = History::where('id', $id)->first();
         if($history){
-            return view('history.show',compact('history'));
+            $patient = Patient::where('id', $id)->first();
+            return view('history.show',compact('history','patient'));
         }
         else{
             return view('history.create',compact('id'));

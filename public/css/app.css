@@ -4017,7 +4017,7 @@ input[type=submit].btn-block {
     border-radius: .25rem;
     -webkit-appearance: none;
     -moz-appearance: none;
-    appearance: none
+    appearance: none;
 }
 
 .custom-select:focus {
@@ -5389,9 +5389,11 @@ input[type=submit].btn-block {
 .alert {
     position: relative;
     padding: .75rem 1.25rem;
-    margin-bottom: 1rem;
+    margin-top: 20px;
     border: 1px solid transparent;
-    border-radius: .25rem
+    border-radius: .25rem;
+    font-size: 17px;
+    width: 100%;
 }
 
 .alert-heading {
@@ -9566,7 +9568,7 @@ button.bg-dark:hover {
 }
 
 .text-primary {
-    color: #3490dc !important
+    color: #eff1f1 !important
 }
 
 a.text-primary:focus,

@@ -16,6 +16,12 @@ class RecipeController extends Controller
     {
         //
     }
+    public function crearPdf(){
+        $pdf = \PDF::loadView('receta');
+        // return view('receta');
+        return $pdf->stream();
+       
+    }
 
     /**
      * Show the form for creating a new resource.

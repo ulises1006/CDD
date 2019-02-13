@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div style="margin-top:55px;margin-right:0px;" class="row justify-content-center">
         <div class="col-md-11">
             <div class="right-align">
                 <a href="{{ Route('patient.create') }}" class="waves-effect blue btn-large right-align white-text"><i class="material-icons right">add_circle</i>Registrar paciente</a>
