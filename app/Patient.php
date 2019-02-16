@@ -14,8 +14,8 @@ class Patient extends Model
         $this->hasMany('App\History');
     }
 
-    public function payments(){
-        $this->hasMany('App\Payment');
+    public function pagos(){
+        return $this->hasMany('App\Pago');
     }
 
     public function treatments(){

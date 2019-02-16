@@ -80,6 +80,12 @@
                                         $('#fecha2').val('{{ $appointment->date }}');
                                         $('#hora2').val('{{ $appointment->hour }}');
                                         $('#descripcion2').val('{{ $appointment->description }}');
+                                        if({{ $appointment->doctor_id }} == 1){
+                                            $('#doctor2').val('Dr. Alberto Garcia Arellano');
+                                        }else{
+                                            $('#doctor2').val('Dr. Sergio León Díaz Arellano');
+                                        }
+                                        
                                         $(this).css('border-color', 'red');
                                     }
                                 @endforeach
@@ -147,7 +153,7 @@
                         @if( $rol == 'secretaria')
                         <div class="input-field col s6">
                             <select id="doctor" name="doctor">
-                                <option value="" disabled selected>Sexo</option>
+                                <option value="" disabled selected>Doctor</option>
                                 <option value="1">Dr. Alberto Garcia Arellano</option>
                                 <option value="2">Dr. Sergio León Diaz Arellano</option>
                             </select>
@@ -231,11 +237,9 @@
                         </div>
                         @if( $rol == 'secretaria')
                         <div class="input-field col s6">
-                            <select id="doctor" name="doctor">
-                                <option value="" disabled selected>Sexo</option>
-                                <option value="1">Dr. Alberto Garcia Arellano</option>
-                                <option value="2">Dr. Sergio León Diaz Arellano</option>
-                            </select>
+                                <label id="label-form" for="descripcion">{{ __('Doctor') }}</label>
+                            
+                                <input id="doctor2" type="text" name="doctor" autofocus disabled> 
                         </div>
                         @endif
                     </div>

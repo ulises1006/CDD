@@ -23,9 +23,9 @@
      <link rel="stylesheet" href="{{ asset('css/fullcalendar.min.css') }}"  media="screen,projection"/>
      {{-- <link rel="stylesheet" href="{{ asset('css/fullcalendar.print.min.css') }}"  media="screen,projection"/> --}}
     
-    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>  --}}
     <script type="text/javascript" src="http://momentjs.com/downloads/moment.min.js" defer></script>
-     --}}
+    
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js" defer></script>
         
 
@@ -110,27 +110,27 @@
                 
                 @else
                 <div style="background-color:#f6efdf;border: 0;" class="col-md-2 pull-left">
-                        
+                    <ul style="background-color:#00618c;width:25%;" id="slide-out" class="sidenav">
+                        <li><div class="user-view center">
+                          <div class="background center">
+                            <img id="imagen_fondo_sidenav" src="../../images/f3.jpg">
+                          </div>
+                          <a><img id="user_imagen" class="circle" src="../../images/doc.png"></a>
+                          <a><span style="font-size:19px; font-weight:900;" class="black-text name">{{ Auth::user()->name }}</span></a>
+                        </div></li>
+                        <li><div id="titulo_sidenav" class="container"></div></li>
+                        <li><a style="color:white;" class="waves-effect" href="/"><i id="icon" class="small material-icons">home</i>Inicio</a></li>
+                        <li><a style="color:white;" class="waves-effect" href="{{ Route('appointment.index') }}"><i id="icon" class="small material-icons">event</i>Calendario de citas</a></li>
+                        <li><a style="color:white;" class="waves-effect" href="{{ Route('patient.index') }}"><i id="icon" class="small material-icons">assignment_ind</i>Pacientes</a></li>
+                        <li><a style="color:white;" class="waves-effect" href="{{ Route('payment.index') }}"><i id="icon" class="small material-icons">credit_card</i>Pagos</a></li>
+                        <li><a style="color:white;" class="waves-effect" href="{{ Route('recipe.index') }}"><i id="icon" class="small material-icons">list</i>Recetas</a></li>
+                      </ul>
+                      <a href="#" style="position: fixed;margin-top:0;margin-bottom:0;margin-right:20px;right:0;" id="menu_toggle" data-target="slide-out" class="right sidenav-trigger show-on-medium-and-up"><i  style="margin-top:0;margin-bottom:0;" id="icono_menu" class="large material-icons">menu</i></a>
+                              
                 </div>
                 @endguest
                 <div class="col-md-9" id="contenido_principal">
-                        <ul style="background-color:#00618c" id="slide-out" class="sidenav right-aligned right hide-on-med-and-down">
-                                <li><div class="user-view center">
-                                  <div class="background center">
-                                    <img id="imagen_fondo_sidenav" src="../../images/f3.jpg">
-                                  </div>
-                                  <a><img id="user_imagen" class="circle" src="../../images/doc.png"></a>
-                                  <a><span style="font-size:19px; font-weight:900;" class="black-text name">{{ Auth::user()->name }}</span></a>
-                                </div></li>
-                                <li><div id="titulo_sidenav" class="container"></div></li>
-                                <li><a style="color:white;" class="waves-effect" href="/"><i id="icon" class="small material-icons">home</i>Inicio</a></li>
-                                <li><a style="color:white;" class="waves-effect" href="{{ Route('appointment.index') }}"><i id="icon" class="small material-icons">event</i>Calendario de citas</a></li>
-                                <li><a style="color:white;" class="waves-effect" href="{{ Route('patient.index') }}"><i id="icon" class="small material-icons">assignment_ind</i>Pacientes</a></li>
-                                <li><a style="color:white;" class="waves-effect" href="{{ Route('payment.index') }}"><i id="icon" class="small material-icons">credit_card</i>Pagos</a></li>
-                                <li><a style="color:white;" class="waves-effect" href="{{ Route('recipe.index') }}"><i id="icon" class="small material-icons">list</i>Recetas</a></li>
-                              </ul>
-                              <a href="#" style="position: fixed;margin-top:0;margin-bottom:0;margin-right:20px;right:0;" id="menu_toggle" data-target="slide-out" class="right sidenav-trigger show-on-medium-and-up"><i  style="margin-top:0;margin-bottom:0;" id="icono_menu" class="large material-icons">menu</i></a>
-                              
+                        
                     @yield('content')
                 </div>
             </div>
@@ -138,16 +138,16 @@
     </div>
     @yield('foot')
     
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    {{-- <script src="{{ asset('js/jquery.min.js') }}"></script> --}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
-   
     
     
     <script>
        
         document.addEventListener('DOMContentLoaded', function() {
-            var elems = document.querySelectorAll('.sidenav.sidenav-right');
-            var instances = M.Sidenav.init(elems,{edge: 'right'});
+            var elems = document.querySelectorAll('#slide-out');
+            var instances = M.Sidenav.init(elems,{edge: 'right',draggable: 'false', inDuration: 250});
 
             var elems = document.querySelectorAll('.sidenav');
             var instances = M.Sidenav.init(elems,{edge: 'left'});
@@ -189,6 +189,11 @@
                         
            
         });
+
+        // $(document).ready(function(){
+        //     $('.sidenav').sidenav();
+	    //     $('#slide-out').sidenav({ edge: 'right' });
+        // });
        
     </script>  
 

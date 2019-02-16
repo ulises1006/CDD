@@ -1,5 +1,5 @@
 @extends('layouts.app') @section('content')
-<div class="container">
+<div class="container"> 
     <div style="margin-left:15px;" class="row justify-content-center">
         <div class="col-8">
             <div class="card hoverable">
@@ -219,4 +219,4 @@
     }
 
 </script>
-@endsection
+@endsection 

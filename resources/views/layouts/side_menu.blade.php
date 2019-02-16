@@ -13,7 +13,9 @@
         <li><a style="color:white;" class="waves-effect" href="{{ Route('appointment.index') }}"><i id="icon" class="small material-icons">event</i>Calendario de citas</a></li>
         <li><a style="color:white;" class="waves-effect" href="{{ Route('patient.index') }}"><i id="icon" class="small material-icons">assignment_ind</i>Pacientes</a></li>
         <li><a style="color:white;" class="waves-effect" href="{{ Route('payment.index') }}"><i id="icon" class="small material-icons">credit_card</i>Pagos</a></li>
+        @if(Auth::user()->role == 'doctor')
         <li><a style="color:white;" class="waves-effect" href="{{ Route('recipe.index') }}"><i id="icon" class="small material-icons">list</i>Recetas</a></li>
+        @endif
       </ul>
       <a href="#" id="menu_toggle" data-target="sidenav-1" class="top-nav sidenav-trigger full hide-on-large-only"><i id="icono_menu" class="large material-icons">menu</i></a>
       

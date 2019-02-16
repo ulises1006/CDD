@@ -4,12 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Appointment extends Model
+class Pago extends Model
 {
     protected $fillable = [
-        'patient','date','hour','description','doctor_id'
+        'monto','fecha','tratamiento','patient_id','doctor_id'
     ];
-
+    public function patient(){
+        return $this->belongsTo('App\Patient');
+    }
     public function doctor(){
         return $this->belongsTo('App\Doctor');
     }

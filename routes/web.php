@@ -28,7 +28,7 @@ Route::resource('history', 'HistoryController');
 Route::resource('/treatment', 'TreatmentController');
 
 Route::group(['middleware'=>['web']], function (){
-    Route::resource('/payment', 'PaymentController');
+    Route::resource('/payment', 'PagoController');
 });
 
 Route::get('/pdf-receta', 'RecipeController@crearPdf');

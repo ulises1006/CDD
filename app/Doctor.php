@@ -16,4 +16,7 @@ class Doctor extends Model
     public function recipes(){
         $this->hasMany('App\Recipe');
     }
+    public function pagos(){
+        $this->hasMany('App\Pago');
+    }
 }

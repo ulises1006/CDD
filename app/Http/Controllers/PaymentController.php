@@ -13,10 +13,16 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    } 
+
+
     public function index()
     {
         $patients=Patient::all();
-        $payments=Payment::paginate(10);
+        $payments=Payment::with('Patient')->paginate(10);
         return view('payment.index', compact('payments', 'patients'));
     }
 
@@ -51,7 +57,7 @@ class PaymentController extends Controller
         $payment->patient_id =$request->paciente;
         $payment->save();
 
-        return redirect()-> route('payment.index');
+        return redirect()-> route('payment.index')->with('success', 'Pago registrado con éxito');
     }
 
     /**
@@ -96,6 +102,7 @@ class PaymentController extends Controller
      */
     public function destroy(Payment $payment)
     {
-        //
+        $payment->delete();
+        return redirect()-> route('payment.index')->with('success', 'Registro eliminado exitosamente');
     }
 }
