@@ -23,8 +23,18 @@ class AppointmentController extends Controller
     public function index(Request $request)
     {
         $rol = Auth::user()->role;
-        $appointments = Appointment::get();
-        return view('appointment.index',compact('appointments','rol'));
+        if($rol == 'doctor'){
+            $appointmentsB = Appointment::where('doctor_id', 1)->name($request->nombre)->get();
+            $appointmentsS = Appointment::where('doctor_id', 2)->name($request->nombre)->get();
+            $appointments = Appointment::where('doctor_id', Auth::user()->id)->name($request->nombre)->get();
+            return view('appointment.index',compact('appointments','appointmentsB','appointmentsS','rol'));
+        }else{
+            $appointments = Appointment::where('doctor_id', Auth::user()->id)->get();
+            $appointmentsB = Appointment::where('doctor_id', 1)->get();
+            $appointmentsS = Appointment::where('doctor_id', 2)->get();
+            return view('appointment.index',compact('appointments','appointmentsB','appointmentsS','rol'));
+        }
+        
     }
 
     /**
@@ -56,14 +66,14 @@ class AppointmentController extends Controller
             'paciente' => 'required | string',
             'fecha' => 'required | date',
             'hora' => 'required | string',
-            'description' => 'required | string',
+            'descripcion' => 'required | string',
         ]);
         $minutoAnadir=30;
         $segundos_horaInicial=strtotime($request->hora);
         $segundos_minutoAnadir=$minutoAnadir*60;
         $nuevaHora=date("H:i",$segundos_horaInicial+$segundos_minutoAnadir);
         
-        $checkHour = Appointment::where(array('date'=>$request->fecha,'hour'=>$request->hora))->get();
+        $checkHour = Appointment::where(array('date'=>$request->fecha,'hour'=>$request->hora,'doctor_id'=>$doctor_id))->get();
         
         if($checkHour->isEmpty()){
             $appointment = new Appointment;
@@ -71,7 +81,7 @@ class AppointmentController extends Controller
             $appointment->date = $request->fecha;
             $appointment->hour = $request->hora;
             $appointment->hour_end = $nuevaHora;
-            $appointment->description = $request->description;
+            $appointment->description = $request->descripcion;
             $appointment->doctor_id = $doctor_id;
             $appointment->save(); 
             

@@ -47,7 +47,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/side_bar.css') }}" rel="stylesheet">
 </head>
-<body style="background-color:#f6efdf">
+<body style="background-color:rgb(242,243,255)">
     <div id="app">
         <div class="navbar-fixed">
         <nav id="nav_bar" style="background-color:#00618c" class="navbar navbar-expand-md navbar-light navbar-laravel">
@@ -75,11 +75,12 @@
                            
                         @else
                             <li class="nav-item dropdown">
-                            
-                                <a id="navbarDropdown" style="font-size: 20px; color:#fff" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
+                                <div style="margin-bottom:0;" class="row">
+                                    <i class="material-icons">person</i>
+                                    <a id="navbarDropdown" style="font-size: 20px; color:#fff" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        {{ Auth::user()->name }} <span class="caret"> </span>
+                                    </a>
+                                
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a style="font-size: 20px;" class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
@@ -91,6 +92,7 @@
                                         @csrf
                                     </form>
                                 </div>
+                            </div>
                             </li>
                         @endguest
                     </ul>
@@ -104,29 +106,27 @@
         @include('layouts.side_menu')
         
         @endguest
-        <main style="background-color:#f6efdf" class="py-4">
-            <div style="background-color:#f6efdf" class="row">
+        <main style="background-color:rgb(242,243,255)" class="py-4">
+            <div style="background-color:rgb(242,243,255)" class="row">
                 @guest
                 
                 @else
                 <div style="background-color:#f6efdf;border: 0;" class="col-md-2 pull-left">
-                    <ul style="background-color:#00618c;width:25%;" id="slide-out" class="sidenav">
-                        <li><div class="user-view center">
-                          <div class="background center">
-                            <img id="imagen_fondo_sidenav" src="../../images/f3.jpg">
-                          </div>
-                          <a><img id="user_imagen" class="circle" src="../../images/doc.png"></a>
-                          <a><span style="font-size:19px; font-weight:900;" class="black-text name">{{ Auth::user()->name }}</span></a>
-                        </div></li>
-                        <li><div id="titulo_sidenav" class="container"></div></li>
-                        <li><a style="color:white;" class="waves-effect" href="/"><i id="icon" class="small material-icons">home</i>Inicio</a></li>
-                        <li><a style="color:white;" class="waves-effect" href="{{ Route('appointment.index') }}"><i id="icon" class="small material-icons">event</i>Calendario de citas</a></li>
-                        <li><a style="color:white;" class="waves-effect" href="{{ Route('patient.index') }}"><i id="icon" class="small material-icons">assignment_ind</i>Pacientes</a></li>
-                        <li><a style="color:white;" class="waves-effect" href="{{ Route('payment.index') }}"><i id="icon" class="small material-icons">credit_card</i>Pagos</a></li>
-                        <li><a style="color:white;" class="waves-effect" href="{{ Route('recipe.index') }}"><i id="icon" class="small material-icons">list</i>Recetas</a></li>
-                      </ul>
-                      <a href="#" style="position: fixed;margin-top:0;margin-bottom:0;margin-right:20px;right:0;" id="menu_toggle" data-target="slide-out" class="right sidenav-trigger show-on-medium-and-up"><i  style="margin-top:0;margin-bottom:0;" id="icono_menu" class="large material-icons">menu</i></a>
-                              
+                        <ul style="background-color:#00618c;width:25%;" id="slide-out" class="sidenav">
+                                <li><div class="user-view center">
+                                  <div class="background center">
+                                    <img id="imagen_fondo_sidenav" src="../../images/f3.jpg">
+                                  </div>
+                                  <a><img id="user_imagen" class="circle" src="../../images/doc.png"></a>
+                                  <a><span style="font-size:19px; font-weight:900;" class="black-text name">{{ Auth::user()->name }}</span></a>
+                                </div></li>
+                                <li><div id="titulo_sidenav" class="container"></div></li>
+                                <li><a style="color:white;" class="waves-effect" href="/"><i id="icon" class="small material-icons">home</i>Inicio</a></li>
+                                <li><a style="color:white;" class="waves-effect" href="{{ Route('appointment.index') }}"><i id="icon" class="small material-icons">event</i>Calendario de citas</a></li>
+                                <li><a style="color:white;" class="waves-effect" href="{{ Route('patient.index') }}"><i id="icon" class="small material-icons">assignment_ind</i>Pacientes</a></li>
+                                <li><a style="color:white;" class="waves-effect" href="{{ Route('payment.index') }}"><i id="icon" class="small material-icons">credit_card</i>Pagos</a></li>
+                                <li><a style="color:white;" class="waves-effect" href="{{ Route('recipe.index') }}"><i id="icon" class="small material-icons">list</i>Recetas</a></li>
+                              </ul> 
                 </div>
                 @endguest
                 <div class="col-md-9" id="contenido_principal">
@@ -146,8 +146,10 @@
     <script>
        
         document.addEventListener('DOMContentLoaded', function() {
-            var elems = document.querySelectorAll('#slide-out');
-            var instances = M.Sidenav.init(elems,{edge: 'right',draggable: 'false', inDuration: 250});
+            
+            
+            var el = document.querySelectorAll('.tabs');
+            var instance = M.Tabs.init(el);
 
             var elems = document.querySelectorAll('.sidenav');
             var instances = M.Sidenav.init(elems,{edge: 'left'});

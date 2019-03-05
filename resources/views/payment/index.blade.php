@@ -9,7 +9,7 @@
                         <i class="material-icons right">add_circle</i>Pago extra</a>
             </div>
             @if ($errors->any())
-            <div id="mydiv" class="alert alert-danger" style="magin-top:140px;">
+            <div id="mydiv" class="alert alert-danger" style="margin-top:25px;margin-left: 20px;">
                 <ul>
                     @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -17,7 +17,7 @@
                 </ul>
             </div>
             @endif
-            <div style="margin-left: 20px;" class="row col-12">
+            <div style="margin-left: 25px;" class="row col-12">
                 @if(session('success'))
                 <div id="mydiv" class="alert alert-success">
                     {{ session('success') }}
@@ -28,7 +28,20 @@
                 </div>
                 @endif
             </div>
-            <div style="width: 700px;height:400px;padding-right:0px !important;padding-bottom:0;" class="modal modal_box" id="modal1"
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script>
+                    setTimeout(function () {
+                        $('#mydiv').fadeOut('fast');
+                    }, 3000);
+
+                    $(document).ready(function() {
+                        $('#paciente').change(function(){
+                            var selected = $(':selected',this);
+                            $('#patient_id').val(selected.val());
+                        });    
+                    });                
+            </script>
+            <div style="width: 700px;height:330px;padding-right:0px !important;padding-bottom:0;" class="modal modal_box" id="modal1"
                 tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 
                 <div style="width: 700px;height:400px;padding-bottom:0;" class="modal-content">
@@ -41,12 +54,16 @@
                     </div>
 
                     <div style="padding-bottom:0;padding-top:29px;" class="modal-body">
-                            <form method="POST" action="{{ route('payment.store') }}">
+                            <form method="POST" action="{{ route('payment.mandar') }}">
                             @csrf
-                            <div style="margin-bottom:0;" class="row">
-
+                            <div style="margin-bottom:0;" class="row justify-content-center">
+                                    <div  style="margin-bottom:0;"  class="row">
+                                            <h4>Elija el paciente al cual le quiera registrar un pago</h4>
+                                        </div>
                                 <div style="margin-bottom:0;" class="row col-12">
+                                   
                                     <div class="input-field col s6">
+                                            <input type="hidden" id="patient_id" name="patient_id">
                                         <select id="paciente" name="paciente">
                                             <option value="" disabled selected>Nombre del paciente</option>
                                             @foreach ($patients as $patient)
@@ -59,7 +76,7 @@
                                         </span>
                                         @endif
                                     </div>
-                                    <div style="margin-top:0;" class="input-field col s6">
+                                    {{-- <div style="margin-top:0;" class="input-field col s6">
                                         <div class="input-field col s6">
                                             <label id="label-form" for="fecha">{{ __('Fecha') }}</label>
                                             <input id="fecha" type="text" name="fecha" class="datepicker"> @if ($errors->has('fecha'))
@@ -77,7 +94,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                </div>
+                                </div> 
                                 <div class="row col-12">
                                     <div class="input-field col s6">
                                         <label id="label-form" for="tratamiento">{{ __('Tratamiento') }}</label>
@@ -88,9 +105,16 @@
                                         </span>
                                         @endif
                                     </div>
-
+                                    <div class="input-field col s6">
+                                            <select id="doctor" name="doctor">
+                                                <option value="" disabled selected>Doctor</option>
+                                                <option value="1">Dr. Alberto Garcia Arellano</option>
+                                                <option value="2">Dr. Sergio León Diaz Arellano</option>
+                                            </select>
+                                        </div>
                                 </div>
-
+--}}
+                            </div>
 
 
                                 <div style="margin-bottom:0; margin-top:15px;" class="row col-12 justify-content-center">
@@ -164,6 +188,15 @@
                                         </span>
                                         @endif
                                     </div>
+                                    @if( $rol == 'secretaria')
+                        <div class="input-field col s6">
+                            <select id="doctor" name="doctor">
+                                <option value="" disabled selected>Doctor</option>
+                                <option value="1">Dr. Alberto Garcia Arellano</option>
+                                <option value="2">Dr. Sergio León Diaz Arellano</option>
+                            </select>
+                        </div>
+                        @endif
 
                                 </div>
 
@@ -204,7 +237,7 @@
                         @if($payment->paciente_no_registrado == null)
                         <th style="width:25%">{{ $payment->patient->name}}</th>
                         @else
-                        <th style="width:25%">{{ $payment->paciente_no_registrado}}</th>
+                        <th style="width:25%;">*    {{ $payment->paciente_no_registrado}}</th>
                         @endif
                         <th style="width:15%">{{ $payment->monto}}</th>
                         <th style="width:15%">{{ $payment->fecha}}</th>
@@ -212,7 +245,7 @@
 
                         <th style="width:10%">
                                 {!! Form::open(['route'=> ['payment.destroy',$payment],'method'=>'DELETE']) !!}
-                                <button class="btn-floating btn-large waves-effect waves-light red white-text" type="submit" onclick="return confirm('Esta seguro de que quiere eliminar este registro?')">
+                                <button class="btn-floating btn-large waves-effect waves-light red white-text" type="submit" >
                                         <i class="material-icons right" style="text-align:center;">delete</i></button>
                                 {!! Form::close() !!}
                             
@@ -240,7 +273,7 @@
                             @if($payment->paciente_no_registrado == null)
                             <th style="width:20%">{{ $payment->patient->name}}</th>
                             @else
-                            <th style="width:20%">{{ $payment->paciente_no_registrado}}</th>
+                            <th style="width:20%;">*    {{ $payment->paciente_no_registrado}}</th>
                             @endif
                             <th style="width:10%">{{ $payment->monto}}</th>
                             <th style="width:10%">{{ $payment->fecha}}</th>
@@ -248,7 +281,7 @@
                             <th style="width:20%">{{ $payment->doctor->name}}</th>
                             <th style="width:10%">
                                     {!! Form::open(['route'=> ['payment.destroy',$payment],'method'=>'DELETE']) !!}
-                                    <button class="btn-floating btn-large waves-effect waves-light red white-text" type="submit" onclick="return confirm('Esta seguro de que quiere eliminar este registro?')">
+                                    <button class="btn-floating btn-large waves-effect waves-light red white-text" type="submit" >
                                             <i class="material-icons right" style="text-align:center;">delete</i></button>
                                     {!! Form::close() !!}
                                 
@@ -260,61 +293,13 @@
             </table>
             {{ $payments->links()}}
 
-            <div style="width:600px;height:297px;padding-right:0px !important;" class="modal modal_box" id="eliminar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                        
-                    <div class="modal-content">
-                        <div class="modal-header" style="text-align:center;">
-                            <h3 class="center-align" >Eliminar registro</h3>
-                            <button type="button" class="close align-right" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            
-                        </div>
-    
-                        <div class="modal-body">
-                            <h4 class="center-align">Si aceptas los términos, el registro será eliminado definitivamente</h4>
-                            <h4 class="center-align">¿Realmente deseas eliminarlo?</h4>
-                        </div>
-                        <div class="modal-footer">
-                            <button style="color:black;margin-right:5px;" type="button" class="waves-effect grey lighten-4 btn" data-dismiss="modal">Cancelar</button>
-                            {!! Form::open(['route'=> ['payment.destroy',$payment],'method'=>'DELETE']) !!}
-                            <button style="color:white;" type="submit" class="waves-effect red darken-3 btn">Eliminar registro</button>
-                            {{ Form::submit('Eliminar', ['class' => 'waves-effect red darken-3 btn'])}}
-                            {!! Form::close() !!}
-                            
-                            
-                        </div>
-                    </div>
-                </div>
+            
         </div>
     </div>
-    <script>
-        $(document).ready(function () {
-            setTimeout(function () {
-                $('#mydiv').fadeOut('fast');
-            }, 3000);
-            // page is now ready, initialize the calendar...
-
-        function mostrar_ocultar() {
-            $('#paciente').hide();
-        }
-        
-
-        });
-       
     
-    </script>
 </div>
 
 @endsection
 @section('foot')
-<script>
-                        
-        function mostrar_ocultar() {
-            document.getElementById('texto').style.display='none';
-            document.getElementById('paciente').style.display='none';
-            $('#paciente').hide();
-        }
-    
-    </script>
+
 @endsection

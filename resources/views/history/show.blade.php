@@ -1,21 +1,39 @@
 @extends('layouts.app') @section('content')
 <div style="margin-left:25px;" class="container">
-    <div class="row justify-content-center">
+    <div style="position:relative;margin-top:30px;" class="row justify-content-center">
         <div style="text-align:center;" class="justify-content-center">
-            <h1 style="font-weight:900;">Historia clínica</h1>
-            <h4>{{ $patient->name }}</h4>
+            <div class="row">
+                <div class="col-3">
+                <a style="right: 345px;position:absolute;" class="btn-floating btn-large waves-effect blue darken-3 black-text" href="{{ Route('patient.show',$patient) }}">
+                        <i class="material-icons left">arrow_back</i>
+                </a>  
+                </div>
+                <div class="col9">
+                 <h1 style="font-weight:900;">Historia clínica</h1>
+                </div> 
+           
+            
+            </div>
+                <h4>{{ $patient->name }}</h4>
+        </div>
+        
+    </div>
+    <div class="row justify-content-center">
+        <div style="position:relative;" class="right-align">
+            <a href="{{ Route('history.edit',$history) }}" class="waves-effect blue darken-4 btn-large right-align white-text"><i class="material-icons right">edit</i>Editar</a>
+            <a href="{{ Route('imprimir_historia',array($history, $patient)) }}" class="waves-effect orange darken-4 btn-large right-align white-text"><i class="material-icons right">print</i>Imprimir</a>
         </div>
     </div>
     <div style="margin-left:19px;" class="row">
-        <div style="padding:0;" class="row col-12">
+        <div style="padding:0;margin-top:20px;" class="row col-12">
             <div class="col-3">
-                <h4 style="font-weight:600;">Motivo:</h4>
+                <h4 style="font-weight:600;">Motivo de la consulta:</h4>
             </div>
             <div style="border-bottom: 0.5px solid black;" class="col-9">
                 <h4>{{ $history->motivo }}</h4>
             </div>
         </div>
-        <div style="text-align:center;margin-top:25px;" class="col-12 justify-content-center">
+        <div style="text-align:center;margin-top:25px;margin-bottom:15px;" class="col-12 justify-content-center">
             <h3 style="text-align:center;font-weight:900;">En caso de emergencia, comunicarse con:</h3>
         </div>
         <div style="margin-bottom:0;padding:0;" class="row col-12">
@@ -47,7 +65,7 @@
                     <div class="col-6">
                         <h4 style="font-weight:600;">Parentesco con el paciente:</h4>
                     </div>
-                    <div style="border-bottom: 0.5px solid black;" class="col-6">
+                    <div style="border-bottom: 0.5px solid black;margin-top:18px;" class="col-6">
                         <h4>{{ $history->parentesco }}</h4>
                     </div>
                 </div>

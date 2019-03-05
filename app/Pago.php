@@ -15,4 +15,7 @@ class Pago extends Model
     public function doctor(){
         return $this->belongsTo('App\Doctor');
     }
+    public function treatment(){
+        return $this->belongsTo('App\Treatment');
+    }
 }

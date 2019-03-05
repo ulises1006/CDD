@@ -56,9 +56,14 @@ class HomeController extends Controller
         $anio = date('Y');
         $fecha = date('Y-m-d');
         $doctor = Auth::user()->id;
-
-        $appointments = Appointment::where(array('doctor_id'=>$doctor,'date'=>$fecha))->orderBy('hour', 'asc')->get();
-      
-        return view('home', compact('dia','mes','anio','fecha','appointments'));
+        if(Auth::user()->role == "secretaria"){
+            $appointmentsB = Appointment::where(array('doctor_id'=>1,'date'=>$fecha))->orderBy('hour', 'asc')->get();
+            $appointmentsS = Appointment::where(array('doctor_id'=>2,'date'=>$fecha))->orderBy('hour', 'asc')->get(); 
+            return view('home', compact('dia','mes','anio','fecha','appointmentsB','appointmentsS'));
+        }else{
+            $appointments = Appointment::where(array('doctor_id'=>$doctor,'date'=>$fecha))->orderBy('hour', 'asc')->get();
+            return view('home', compact('dia','mes','anio','fecha','appointments'));
+        }
+        
     }
 }

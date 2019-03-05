@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Patient extends Model
+class Paciente extends Model
 {
     protected $fillable = [
-        'name','address','city','state','age','birthday','parent','phone','sex','occupation'
+        'name','address','city','state','age','birthday','parent','phone','sex','occupation','doctor_id'
     ];
 
     public function hystories(){
@@ -20,15 +20,5 @@ class Patient extends Model
 
     public function treatments(){
         return $this->hasMany('App\Treatment');
-    }
-
-    public function doctor(){
-        return $this->belongsTo('App\Doctor');
-    }
-
-    //Query Scopes
-    public function scopeName($query, $name){
-        if($name)
-            return $query->where('name','LIKE',"%$name%");
     }
 }

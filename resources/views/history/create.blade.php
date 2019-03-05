@@ -7,7 +7,7 @@
             </div>
 
             <div class="card-body">
-                <form method="POST" action="{{ route('history.store') }}">
+                <form method="POST" action="{{ route('history.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="input-field col s12">
@@ -20,7 +20,7 @@
                             </span>
                             @endif
                         </div>
-
+                        
                     </div>
 
                     <div class="row">

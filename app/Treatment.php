@@ -11,4 +11,7 @@ class Treatment extends Model
     public function patient(){
         $this->belongsTo('App\Patient');
     }
+    public function pagos(){
+        return $this->hasMany('App\Pago');
+    }
 }

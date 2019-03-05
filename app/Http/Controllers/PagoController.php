@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Pago;
 use App\Patient;
+use App\Treatment;
 use Auth;
 use Illuminate\Http\Request;
 
 class PagoController extends Controller
 {
-   public function __construct()
+    public function __construct()
     {
         $this->middleware('auth');
     } 
@@ -23,13 +24,33 @@ class PagoController extends Controller
             $payments=Pago::with('Patient','Doctor')->paginate(10);
             
             return view('payment.index', compact('payments', 'patients','rol'));
-        }
+        } 
         else{
             $payments = Pago::where('doctor_id',Auth::user()->id)->with('Patient')->paginate(10);
-            dd($payments);
             return view('payment.index', compact('payments', 'patients','rol'));
         }
         
+    }
+
+    public function indexPatient($id){
+        $payments = Pago::where(array('doctor_id'=>Auth::user()->id,'patient_id'=>$id))->with('Treatment')->get();
+        $tratamientos = Treatment::where('patient_id',$id)->get();
+        $patient = Patient::where('id',$id)->first();
+
+        foreach ($tratamientos as $tratamiento){ 
+            foreach ($payments as $payment){
+                if($payment->treatment_id == $tratamiento->id){
+                   
+                }
+            }
+        }
+
+        return view('payment.indexPatient', compact('payments','tratamientos','patient'));
+    }
+
+    public function mandar(Request $request){
+        $id = $request->patient_id;
+        return redirect()-> route('payment.indexPatient',$id);
     }
 
     /**
@@ -66,7 +87,8 @@ class PagoController extends Controller
             ]);
 
         if($request->pacienteSR == null){
-            $paciente = $request->paciente;
+            
+            $paciente = $request->patient_id;
             
             $payment = new Pago;
             $payment->monto = $request->monto;
@@ -74,10 +96,11 @@ class PagoController extends Controller
             $payment->tratamiento = $request->tratamiento;
             $payment->patient_id =$paciente;
             $payment->doctor_id = $doctor_id;
+            $payment->treatment_id = $request->tratamiento_id;
             $payment->save();
     
-            return redirect()-> route('payment.index')->with('success', 'Pago registrado con éxito');
-        }else{
+            return redirect()-> route('payment.indexPatient',$paciente)->with('success', 'Pago registrado con éxito');
+        }else {
             $paciente = $request->pacienteSR;
             $payment = new Pago;
             $payment->monto = $request->monto;
@@ -85,12 +108,11 @@ class PagoController extends Controller
             $payment->tratamiento = $request->tratamiento;
             $payment->paciente_no_registrado =$paciente;
             $payment->doctor_id = $doctor_id;
+           
             $payment->save();
     
             return redirect()-> route('payment.index')->with('success', 'Pago registrado con éxito');
-        }
-
-       
+        }       
     }
 
     /**

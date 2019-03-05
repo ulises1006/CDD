@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-7">
-            <div class="card" style="height: 110%">
+            <div class="card" style="height: 120%">
                 <div class="card-header" style="text-align: center; font-size: 26px; font-family: 'Nunito', sans-serif;">{{ __('Iniciar sesión') }}</div>
 
                 <div class="card-body">
@@ -43,10 +43,14 @@
 
                         <div id="boton_contenedor" class="form-group row mb-0">
                             <div class="col-md-12 center">
-                                <button type="submit" style="width:80%; height:40px" class="btn btn-primary">
+                                <button type="submit" style="width:80%; height:40px; margin-bottom:20px;" class="btn btn-primary">
                                     {{ __('Iniciar sesión') }}
                                 </button>
-
+                                {{-- @if (Route::has('password.request'))
+                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    {{ __('Forgot Your Password?') }}
+                                </a>
+                                @endif --}}
                               
                             </div>
                         </div>

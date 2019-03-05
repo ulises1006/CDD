@@ -13,7 +13,7 @@ class History extends Model
         'tuberculosis','ulceras_gastricas','vih','embarazo','amamantando','anticonceptivo','medicamentos',
         'alergias','prob_dental_previo','tabaquismo','alcoholismo','drogas'
     ];
-    public function patient(){
-        $this->belongsTo('App\Patient');
+    public function paciente(){
+        $this->belongsTo('App\Paciente');
     }
 }

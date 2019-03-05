@@ -11,6 +11,6 @@ class Recipe extends Model
     ];
 
     public function doctor(){
-        $this->belongsTo('App\Doctor');
+       return $this->belongsTo('App\Doctor');
     }
 }

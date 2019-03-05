@@ -11,12 +11,15 @@ class Doctor extends Model
     ];
 
     public function appointments(){
-        $this->hasMany('App\Appointment');
+        return $this->hasMany('App\Appointment');
+    }
+    public function patients(){
+        return $this->hasMany('App\Patient');
     }
     public function recipes(){
-        $this->hasMany('App\Recipe');
+        return $this->hasMany('App\Recipe');
     }
     public function pagos(){
-        $this->hasMany('App\Pago');
+        return $this->hasMany('App\Pago');
     }
 }

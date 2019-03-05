@@ -2,37 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Patient;
 use App\History;
 use Auth;
+use App\Paciente;
 use Illuminate\Http\Request;
-use Session;
 
-class PatientController extends Controller
+class PacienteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
     public function __construct()
     {
         $this->middleware('auth');
     } 
 
 
-    public function index(Request $request)
+    public function index()
     {
-        $rol = Auth::user()->role;
-        if($rol == 'doctor'){
-            $patients = Patient::where('doctor_id',Auth::user()->id)->name($request->nombre)->paginate(10);
-            return view('patient.index', compact('patients','rol'));
-        }else{
-            $patients = Patient::with('Doctor')->paginate(10);
-            return view('patient.index', compact('patients','rol'));
-        }
-       
+        $patients = Paciente::where('doctor_id',Auth::user()->id)->paginate(10);
+        return view('patient.index', compact('patients'));
     }
 
     /**
@@ -54,18 +40,6 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
-    
-        if($request->correo == null){
-            $correo = "";
-        }else{
-            $correo = $request->correo;
-        }
-        if($request->rfc == null){
-            $rfc = "";
-        }else{
-            $rfc = $request->rfc;
-        }
-
         $doctor_id;
         if(Auth::user()->role == "secretaria"){
             $doctor_id = $request->doctor;
@@ -80,10 +54,8 @@ class PatientController extends Controller
             'phone' => 'required | string',
             'sex' => 'required | string',
         ]);
-
-       
         //Instanciar modelo: Almacenamiento
-        $patient = new Patient;
+        $patient = new Paciente;
         $patient->name = $request->name;
         $patient->address = $request->address;
         $patient->code = $request->code;
@@ -95,18 +67,6 @@ class PatientController extends Controller
         $patient->sex = $request->sex;
         $patient->occupation = $request->occupation;
         $patient->doctor_id = $doctor_id;
-        $patient->email = $correo;
-        $patient->rfc = $rfc;
-        $patient->save();
-
-        $name = $patient->id;
-
-        if($request->hasFile('photo')){
-            
-            $file = $request->file('photo');
-            $file->move(public_path().'/images/',$name.'.jpg');
-        }
-        $patient->photo = $name; 
         $patient->save();
 
         //Redireccionar
@@ -119,7 +79,7 @@ class PatientController extends Controller
      * @param  \App\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function show(Patient $patient)
+    public function show(Paciente $patient)
     {
         $history = History::where('id',$patient->id)->first();
         if(empty($history)){
@@ -137,7 +97,7 @@ class PatientController extends Controller
      * @param  \App\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function edit(Patient $patient)
+    public function edit(Paciente $patient)
     {
         return view('patient.edit', compact('patient'));
     }
@@ -149,7 +109,7 @@ class PatientController extends Controller
      * @param  \App\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Patient $patient)
+    public function update(Request $request, Paciente $patient)
     {
         $patient->name = $request->name;
         $patient->address = $request->address;
@@ -160,18 +120,6 @@ class PatientController extends Controller
         $patient->parent = $request->parent;
         $patient->phone = $request->phone;
         $patient->occupation = $request->occupation;
-        $patient->email = $request->correo;
-        $patient->rfc = $request->rfc;
-        $patient->save();
-        
-        $name = $patient->id;
-
-        if($request->hasFile('photo')){
-            
-            $file = $request->file('photo');
-            $file->move(public_path().'/images/',$name.'.jpg');
-        }
-        $patient->photo = $name; 
         $patient->save();
 
         //Redireccionar
@@ -184,7 +132,7 @@ class PatientController extends Controller
      * @param  \App\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Patient $patient)
+    public function destroy(Paciente $patient)
     {
         $patient->delete();
         Session::put('success', 'Your Record Deleted Successfully.');

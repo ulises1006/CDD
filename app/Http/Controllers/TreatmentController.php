@@ -3,18 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Treatment;
+use App\Patient;
+use Auth;
 use Illuminate\Http\Request;
 
 class TreatmentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    } 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        //
+       
+    }
+
+    public function indexPatient($id)
+    {
+        $tratamientos = Treatment::where('patient_id',$id)->get();
+        $patient = Patient::where('id',$id)->first();
+        return view('treatment.index', compact('tratamientos','patient'));
     }
 
     /**
@@ -35,7 +48,20 @@ class TreatmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'name' => 'required | string',
+            'description' => 'required | string',
+            'price' => 'required | integer',
+        ]);
+
+        $treatment = new Treatment;
+        $treatment->name = $request->name;
+        $treatment->description = $request->description;
+        $treatment->price = $request->price;
+        $treatment->patient_id = $request->patient_id;
+        $treatment->save();
+
+        return redirect()-> route('treatment.indexPatient',$request->patient_id)->with('success', 'Tratamiento registrado con éxito');
     }
 
     /**
@@ -69,7 +95,9 @@ class TreatmentController extends Controller
      */
     public function update(Request $request, Treatment $treatment)
     {
-        //
+        $treatment->status = $request->status;
+        $treatment->save();
+        return redirect()-> route('treatment.indexPatient',$request->patient_id)->with('success', 'Tratamiento establecido como terminado');
     }
 
     /**
@@ -80,6 +108,12 @@ class TreatmentController extends Controller
      */
     public function destroy(Treatment $treatment)
     {
-        //
+        $treatment->delete();
+        return redirect()-> route('payment.index')->with('success', 'Registro eliminado exitosamente');
+    }
+    public function destroyTreatment(Treatment $treatment, $id)
+    {
+        $treatment->delete();
+        return redirect()-> route('treatment.indexPatient',$id)->with('success', 'Registro eliminado exitosamente');
     }
 }

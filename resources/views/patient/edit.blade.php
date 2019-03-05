@@ -7,7 +7,7 @@
                 </div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('patient.update',$patient->id) }}">
+                    <form method="POST" action="{{ route('patient.update',$patient->id) }}" enctype="multipart/form-data">
                         @csrf
                         {{ method_field('PUT') }}
                         <div class="row">
@@ -44,7 +44,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="input-field col s6">
+                            <div class="input-field col s4">
                                 <label id="label-form" for="parent">{{ __('Padre o tutor') }}</label>
                                 <input id="parent" type="text" class="form-control{{ $errors->has('parent') ? ' is-invalid' : '' }}" name="parent" value="{{ $patient->parent }}"> 
                                 @if ($errors->has('parent'))
@@ -53,7 +53,7 @@
                                     </span>
                                 @endif
                             </div>
-                            <div class="input-field col s6">
+                            <div class="input-field col s4">
                                 <label id="label-form" for="phone">{{ __('Numero de teléfono') }}</label>
                                 <input id="phone" type="text" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" value="{{ $patient->phone }}" > 
                                 @if ($errors->has('phone'))
@@ -62,6 +62,15 @@
                                     </span>
                                 @endif
                             </div>
+                            <div style="margin-top:-5px;" class="input-field col s4">
+                                    <label id="label-form" for="photo">{{ __('*Foto de paciente') }}</label><br><br>
+                                    <input id="photo" type="file" name="photo"> 
+                                    @if ($errors->has('photo'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('photo') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
                         </div>
 
                         <div class="row">
@@ -116,7 +125,32 @@
                                 </div>
                             </div>
                         
-
+                            <div class="row">
+                                    <h3>Datos de facturación (opcional)</h3>
+                                </div>
+                                
+                                <div class="row">
+                                        <div class="input-field col s6">
+                                            <label id="label-form" for="birthday">{{ __('Correo electronico') }}</label>
+                                            <input id="correo" type="text" value="{{ $patient->email }}" name="correo" autofocus> 
+                                            @if ($errors->has('correo'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('correo') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                            <div class="input-field col s6">
+                                                <label id="label-form" for="occupation">{{ __('RFC') }}</label>
+                                                <input id="rfc" type="text" value="{{ $patient->rfc }}" class="form-control{{ $errors->has('rfc') ? ' is-invalid' : '' }}" name="rfc" autofocus> 
+                                                @if ($errors->has('rfc'))
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $errors->first('rfc') }}</strong>
+                                                    </span>
+                                                @endif
+                                            </div>
+            
+                                    </div>
+                                    
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-3">
                                 <button type="submit" style="width:100%; height:50px;" class="btn btn-primary blue darken-3">

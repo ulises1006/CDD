@@ -80,7 +80,7 @@
   }
   #titulo_card{
       text-align: center;
-      font-size: 40px;
+      font-size: 30px;
       margin-bottom: 20px;
       width: 100%;
   }
@@ -117,19 +117,19 @@
 
 
 .dia-label{
-    font-size: 80px;
+    font-size: 70px;
     text-align: center;
     font-weight: 900;
     margin-bottom: 0;
 }
 .mes-label{
-    font-size: 35px;
-    margin-top: 5px;
+    font-size: 25px;
+    margin-top: 15px !important;
     margin-bottom: 0;
     font-weight: 500;
 }
 .anio-label{
-    font-size: 35px;
+    font-size: 25px;
     margin-bottom: 0;
     font-weight: 500;
 }

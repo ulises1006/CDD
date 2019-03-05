@@ -7,7 +7,7 @@
                 </div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('patient.store') }}">
+                    <form method="POST" action="{{ route('patient.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="input-field col s4">
@@ -61,6 +61,15 @@
                                     </span>
                                 @endif
                             </div>
+                            <div style="margin-top:-5px;" class="input-field col s4">
+                                    <label id="label-form" for="photo">{{ __('*Foto de paciente') }}</label><br><br>
+                                    <input id="photo" type="file" name="photo"> 
+                                    @if ($errors->has('photo'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('photo') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
                         </div>
 
                         <div class="row">
@@ -95,7 +104,7 @@
 
 
                         <div class="row">
-                            <div class="input-field col s6">
+                            <div class="input-field col s4">
                                 <label id="label-form" for="birthday">{{ __('Fecha de nacimiento') }}</label>
                                 <input id="birthday" type="text" value="" name="birthday" class="datepicker"> 
                                 @if ($errors->has('birthday'))
@@ -104,7 +113,7 @@
                                     </span>
                                 @endif
                             </div>
-                                <div class="input-field col s6">
+                                <div class="input-field col s4">
                                     <label id="label-form" for="occupation">{{ __('Ocupación') }}</label>
                                     <input id="occupation" type="text" class="form-control{{ $errors->has('occupation') ? ' is-invalid' : '' }}" name="occupation" value="{{ old('occupation') }}"> 
                                     @if ($errors->has('occupation'))
@@ -113,8 +122,45 @@
                                         </span>
                                     @endif
                                 </div>
+
+                                @if( $rol == 'secretaria')
+                            <div class="input-field col s4">
+                            <select id="doctor" name="doctor">
+                                <option value="" disabled selected>Doctor</option>
+                                <option value="1">Dr. Alberto Garcia Arellano</option>
+                                <option value="2">Dr. Sergio León Diaz Arellano</option>
+                            </select>
                             </div>
+                            @endif
+                        </div>
+
+                        <div class="row">
+                            <h3>Datos de facturación (opcional)</h3>
+                        </div>
                         
+                        <div class="row">
+                                <div class="input-field col s6">
+                                    <label id="label-form" for="birthday">{{ __('Correo electronico') }}</label>
+                                    <input id="correo" type="text" value="" name="correo" > 
+                                    @if ($errors->has('correo'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('correo') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                    <div class="input-field col s6">
+                                        <label id="label-form" for="occupation">{{ __('RFC') }}</label>
+                                        <input id="rfc" type="text" class="form-control{{ $errors->has('rfc') ? ' is-invalid' : '' }}" name="rfc"> 
+                                        @if ($errors->has('rfc'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('rfc') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+    
+                            </div>
+                            
+                       
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-3">

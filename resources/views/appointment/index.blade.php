@@ -23,25 +23,59 @@
     </div>
 
     <div class="row col-12">
-        <div class="">
-            <h2>Calendario de citas</h2>
+        <div style="margin:auto;margin-bottom:30px;" class="row col-12">
+            <div class="col-6">
+                <div style="margin-bottom:0;margin-top:15px;" class="row">
+                        <a style="margin-top: 0px;" class="btn-floating btn-large waves-effect blue darken-3 black-text" href="{{ Route('appointment.index') }}">
+                                <i class="material-icons left">cached</i>
+                            </a>
+                            <h1 style="margin:auto;" class="center-align">Calendario de citas</h1>
+                </div>
+                
+            </div>
+            
+            <div class="col-6">
+                    <form class="form-inline" action="{{ Route('appointment.index') }}" method="GET">
+                        <label for="nombre">Buscar por nombre</label>
+                        <input style="width:80%;margin-right:10px;" type="text" name="nombre" id="nombre">
+                        <button type="submit" class="waves-effect blue darken-3 btn right-align white-text">Buscar</button>
+                    </form>
+                </div>
         </div>
-        <div class="panel-body">
+        <br>
+        <div style="margin-top:19px;" class="panel-body">
             {{-- {!! $calendar->calendar() !!}
             {!! $calendar->script() !!} --}}
             <script type="text/javascript" src="http://momentjs.com/downloads/moment-with-locales.js" defer></script>
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
             <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js" defer></script>
             <script type="text/javascript" src="{{ asset('js/fullcalendar/locale/es.js') }}" defer></script>
-            <div id="calendar"></div> 
             
+            @if( $rol == 'secretaria')
+            <ul style="background-color:transparent;margin-bottom:20px;" class="tabs center-align">
+                    <li class="tab">
+                      <a style="color:#00618c;font-weight:900;" href="#test1" class="active">Dr. Alberto García Arellano</a>
+                    </li>
+                    <li class="tab">
+                      <a style="color:#00618c;font-weight:900;" class="" href="#test2">Dr. Sergio León Díaz Arellano</a>
+                    </li>
+                  <li class="indicator" style="left: 0px; right: 429px;"></li></ul>
+
+                  <div id="test1" class="col s12" >
+                        <div id="calendar1"></div>
+                  </div>
+                  <div id="test2" class="col s12" >
+                        <div id="calendar2"></div>
+                  </div>
+            @else
+            <div id="calendar"></div> 
+            @endif
            
             <script>
                     $(document).ready(function() {
                         setTimeout(function() { 
                             $('#mydiv').fadeOut('fast'); 
                         }  , 3000);
-
 
                         // page is now ready, initialize the calendar...
                         $('#calendar').fullCalendar({
@@ -73,6 +107,104 @@
                             eventClick: function(calEvent, jsEvent, view) {
                                 const id = calEvent.id;                               
                                 @foreach($appointments as $appointment)
+                                    if({{ $appointment->id }} == id){
+                                        $('#modal2').modal('show');
+                                        $('#id2').val('{{ $appointment->id }}');
+                                        $('#paciente2').val('{{ $appointment->patient }}');
+                                        $('#fecha2').val('{{ $appointment->date }}');
+                                        $('#hora2').val('{{ $appointment->hour }}');
+                                        $('#descripcion2').val('{{ $appointment->description }}');
+                                        if({{ $appointment->doctor_id }} == 1){
+                                            $('#doctor2').val('Dr. Alberto Garcia Arellano');
+                                        }else{
+                                            $('#doctor2').val('Dr. Sergio León Díaz Arellano');
+                                        }
+                                        
+                                        $(this).css('border-color', 'red');
+                                    }
+                                @endforeach
+                            }
+                        });
+
+                        //Calendario de doctor sergio
+                        $('#calendar2').fullCalendar({
+                            timeFormat: 'H(:mm)',
+                            header: {
+                                left: 'prev,next today',
+                                center: 'title',
+                                right: 'month,agendaWeek,agendaDay,listMonth'
+                            },
+                            events : [
+                                @foreach($appointmentsS as $appointment)
+                                
+                                {   
+                                    id : '{{ $appointment->id }}',
+                                    title : '{{ $appointment->patient }}',
+                                    allDay : false,
+                                    start : '{{ $appointment->date. 'T' .$appointment->hour }}',
+                                    end : '{{ $appointment->date. 'T' .$appointment->hour_end }}',
+                                    editable : true,
+                                    descripcion : '{{ $appointment->description }}'
+                               },
+                                @endforeach
+                            ],
+                            dayClick: function(date, jsEvent, view, resourceObj) {
+                                $('#modal1').modal('show',date.format());
+                                $('#fecha').val(date.format());
+                                
+                            },
+                            eventClick: function(calEvent, jsEvent, view) {
+                                const id = calEvent.id;                               
+                                @foreach($appointmentsS as $appointment)
+                                    if({{ $appointment->id }} == id){
+                                        $('#modal2').modal('show');
+                                        $('#id2').val('{{ $appointment->id }}');
+                                        $('#paciente2').val('{{ $appointment->patient }}');
+                                        $('#fecha2').val('{{ $appointment->date }}');
+                                        $('#hora2').val('{{ $appointment->hour }}');
+                                        $('#descripcion2').val('{{ $appointment->description }}');
+                                        if({{ $appointment->doctor_id }} == 1){
+                                            $('#doctor2').val('Dr. Alberto Garcia Arellano');
+                                        }else{
+                                            $('#doctor2').val('Dr. Sergio León Díaz Arellano');
+                                        }
+                                        
+                                        $(this).css('border-color', 'red');
+                                    }
+                                @endforeach
+                            }
+                        });
+
+                        //Calendario de doctor beto
+                        $('#calendar1').fullCalendar({
+                            timeFormat: 'H(:mm)',
+                            header: {
+                                left: 'prev,next today',
+                                center: 'title',
+                                right: 'month,agendaWeek,agendaDay,listMonth'
+                            },
+                            events : [
+                                @foreach($appointmentsB as $appointment)
+                                
+                                {   
+                                    id : '{{ $appointment->id }}',
+                                    title : '{{ $appointment->patient }}',
+                                    allDay : false,
+                                    start : '{{ $appointment->date. 'T' .$appointment->hour }}',
+                                    end : '{{ $appointment->date. 'T' .$appointment->hour_end }}',
+                                    editable : true,
+                                    descripcion : '{{ $appointment->description }}'
+                               },
+                                @endforeach
+                            ],
+                            dayClick: function(date, jsEvent, view, resourceObj) {
+                                $('#modal1').modal('show',date.format());
+                                $('#fecha').val(date.format());
+                                
+                            },
+                            eventClick: function(calEvent, jsEvent, view) {
+                                const id = calEvent.id;                               
+                                @foreach($appointmentsB as $appointment)
                                     if({{ $appointment->id }} == id){
                                         $('#modal2').modal('show');
                                         $('#id2').val('{{ $appointment->id }}');

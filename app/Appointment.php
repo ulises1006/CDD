@@ -13,4 +13,10 @@ class Appointment extends Model
     public function doctor(){
         return $this->belongsTo('App\Doctor');
     }
+
+     //Query Scopes
+     public function scopeName($query, $name){
+        if($name)
+            return $query->where('patient','LIKE',"%$name%");
+    }
 }

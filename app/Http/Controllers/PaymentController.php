@@ -44,6 +44,12 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
+        $doctor_id;
+        if(Auth::user()->role == "secretaria"){
+            $doctor_id = $request->doctor;
+        }else{
+            $doctor_id = Auth::user()->id;
+        }
         $this->validate($request,[
             'monto' => 'required | integer',
             'fecha' => 'required | date',
@@ -55,6 +61,7 @@ class PaymentController extends Controller
         $payment->fecha = $request->fecha;
         $payment->tratamiento = $request->tratamiento;
         $payment->patient_id =$request->paciente;
+        $payment->doctor_id = $doctor_id;
         $payment->save();
 
         return redirect()-> route('payment.index')->with('success', 'Pago registrado con éxito');

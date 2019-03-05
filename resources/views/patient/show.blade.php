@@ -4,11 +4,18 @@
         <div class="col-8">
             <div class="card hoverable">
                 <div style="padding-bottom: 0;padding-top:0;" class="card-content black-text">
-                    <div id="titulo_card" class="card-header">Información del paciente</div>
+                    <div style="text-align:left;" id="titulo_card" class="card-header">
+                            <a style="margin-right: 45px;" class="btn-floating btn-large waves-effect blue darken-3 black-text" href="{{ Route('patient.index') }}">
+                                    <i class="material-icons left">arrow_back</i>
+                                </a>Información del paciente</div>
                     <div class="row">
                         <div style="text-align:center;" class="col-4 center-align valign-wrapper">
                             <div style="text-align:center;margin:auto;" class="center-align">
-                                <img style="width:200px;height:250;border-radius:50%;" src="../../images/user.jpg">
+                                @if($patient->photo == null)
+                                <img style="width:180px;height:200px;border-radius:50%;" src="../../images/user.jpg">
+                                @else
+                                <img style="width:180px;height:200px;border-radius:50%;" src="../../images/{{ $patient->photo }}.jpg">
+                                @endif
                             </div>
                         </div>
                         <div class="col-8">
@@ -187,7 +194,7 @@
                         del odontograma y el registro de un nuevo tratamiento</p>
                 </div>
                 <div style="text-align:center;margin-bottom:18px;margin-top:7px;">
-                    <a class="waves-effect blue darken-3 btn" href="{{ Route('treatment.index') }}">Registrar</a>
+                    <a class="waves-effect blue darken-3 btn" href="{{ Route('treatment.indexPatient',$patient->id) }}">Registrar</a>
                 </div>
             </div>
         </div>
@@ -203,7 +210,7 @@
                         tratamientos así como la posibilidad de agregar un pago nuevo </p>
                 </div>
                 <div style="text-align:center; margin-bottom:18px;margin-top:18px;">
-                    <a class="waves-effect blue darken-3 btn" href="{{ Route('payment.index') }}">Registrar</a>
+                    <a class="waves-effect blue darken-3 btn" href="{{ Route('payment.indexPatient',$patient->id) }}">Registrar</a>
                 </div>
             </div>
         </div>

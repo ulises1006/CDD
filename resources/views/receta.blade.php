@@ -59,21 +59,21 @@
         <table style="height:50%;">
             <thead>
                 <tr style="margin-top:0px;">
-                    <th style="margin-top:0px"><img width="700px" style="margin-top:39px;" src="../public/images/alberto.png"></th>
+                    <th style="margin-top:0px"><img width="700px" style="margin-top:39px;" src="../public/images/{{ $doctor }}.png"></th>
                 </tr>
             </thead>
             <tbody style="height:60px;padding-top:60px; !important">
                 <tr style="height:60px;padding-top:60px; !important">
                     <th class="" style="width:50%;text-align:right;">
                         <div style="height:60px;">
-                            <p style="margin-top:35px;">Durango, Dgo. 24/01/2019</p>
+                            <p style="margin-top:35px;">Durango, Dgo. {{ $recipe->fecha }}</p>
                         </div>
                     </th>
                 </tr>
                 <tr style="margin-top:200px; height:60px;">
                     <th class="" style="width:20%;text-align:left;">
                         <div style="height:0px; margin-top: -15px">
-                            <p>Nombre de paciente: Edna Guadalupe Castrellon Contreras
+                            <p>Nombre de paciente: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $recipe->name_patient }}
                                 <hr style="border-bottom: 0.5px solid black; width: 490px; margin-top: -15px; margin-right: 65px;">
                             </p>
                         </div>
@@ -82,7 +82,7 @@
                 <tr style="margin-top:-100px; height:60px;">
                     <th class="" style="width:20%;text-align:left;">
                         <div style="height:0px;">
-                            <p>Edad:
+                            <p>Edad: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ $recipe->edad }}
                                 <hr style="border-bottom: 0.5px solid black; width: 100px; margin-top: -15px; text-align:left;  margin-right: 550px;">
                             </p>
                         </div>
@@ -92,6 +92,7 @@
                     <th class="" style="width:20%;text-align:left;">
                         <div style="height:0px;">
                             <p style="margin-left: 45px;">Prescripción médica:</p>
+                            <p>{{ $recipe->medicamento }}</p>
                         </div>
                     </th>
                 </tr>
@@ -117,21 +118,21 @@
         <table>
             <thead>
                 <tr style="margin-top:0px;">
-                    <th style="margin-top:0px"><img width="700px" style="margin-top:15px;" src="../public/images/alberto.png"></th>
+                    <th style="margin-top:0px"><img width="700px" style="margin-top:15px;" src="../public/images/{{ $doctor }}.png"></th>
                 </tr>
             </thead>
             <tbody style="height:60px;padding-top:60px; !important">
                 <tr style="height:60px;padding-top:60px; !important">
                     <th class="" style="width:50%;text-align:right;">
                         <div style="height:60px;">
-                            <p style="margin-top:14px;">Durango, Dgo. 24/01/2019</p>
+                            <p style="margin-top:14px;">Durango, Dgo. {{ $recipe->fecha }}</p>
                         </div>
                     </th>
                 </tr>
                 <tr style="margin-top:200px; height:60px;">
                     <th class="" style="width:20%;text-align:left;">
                         <div style="height:0px; margin-top: -15px">
-                            <p style="margin-top: -30px;">Nombre de paciente: Edna Guadalupe Castrellon Contreras
+                            <p style="margin-top: -30px;">Nombre de paciente:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ $recipe->name_patient }}
                                 <hr style="border-bottom: 0.5px solid black; width: 490px; margin-top: -15px; margin-right: 65px;">
                             </p>
                         </div>
@@ -140,7 +141,7 @@
                 <tr style="margin-top:-100px; height:60px;">
                     <th class="" style="width:20%;text-align:left;">
                         <div style="height:0px;">
-                            <p style="margin-top:0px;">Edad:
+                            <p style="margin-top:0px;">Edad: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $recipe->edad }}
                                 <hr style="border-bottom: 0.5px solid black; width: 100px; margin-top: -15px; text-align:left;  margin-right: 550px;">
                             </p>
                         </div>
@@ -150,6 +151,7 @@
                     <th class="" style="width:20%;text-align:left;">
                         <div style="height:0px;">
                             <p style="margin-left: 45px;">Prescripción médica:</p>
+                            <p>{{ $recipe->medicamento }}</p>
                         </div>
                     </th>
                 </tr>
