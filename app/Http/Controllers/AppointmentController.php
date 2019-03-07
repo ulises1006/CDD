@@ -29,9 +29,9 @@ class AppointmentController extends Controller
             $appointments = Appointment::where('doctor_id', Auth::user()->id)->name($request->nombre)->get();
             return view('appointment.index',compact('appointments','appointmentsB','appointmentsS','rol'));
         }else{
-            $appointments = Appointment::where('doctor_id', Auth::user()->id)->get();
-            $appointmentsB = Appointment::where('doctor_id', 1)->get();
-            $appointmentsS = Appointment::where('doctor_id', 2)->get();
+            $appointments = Appointment::where('doctor_id', Auth::user()->id)->name($request->nombre)->get();
+            $appointmentsB = Appointment::where('doctor_id', 1)->name($request->nombre)->get();
+            $appointmentsS = Appointment::where('doctor_id', 2)->name($request->nombre)->get();
             return view('appointment.index',compact('appointments','appointmentsB','appointmentsS','rol'));
         }
         

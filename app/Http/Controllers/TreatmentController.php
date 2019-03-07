@@ -30,6 +30,22 @@ class TreatmentController extends Controller
         return view('treatment.index', compact('tratamientos','patient'));
     }
 
+    public function pdfOdontograma(Request $request){
+        $tratamiento = Treatment::where('id',$request->tratamiento_id)->first();
+        $patient = Patient::where('id',$request->patient_id)->first();
+        $fecha = date('d-m-Y');
+        
+        if($request->doctor_id == 1){
+            $doctor = 'alberto';
+        }
+        else{
+            $doctor = 'sergio';
+        }
+        $pdf = \PDF::loadView('odontograma_pdf',compact('tratamiento','doctor','patient','fecha'));
+        // return view('odontograma');
+        return $pdf->stream();
+    }
+
     /**
      * Show the form for creating a new resource.
      *

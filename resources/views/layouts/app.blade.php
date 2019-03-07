@@ -47,7 +47,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/side_bar.css') }}" rel="stylesheet">
 </head>
-<body style="background-color:rgb(242,243,255)">
+<body style="background-color:rgb(222,225,234)">
     <div id="app">
         <div class="navbar-fixed">
         <nav id="nav_bar" style="background-color:#00618c" class="navbar navbar-expand-md navbar-light navbar-laravel">
@@ -106,8 +106,8 @@
         @include('layouts.side_menu')
         
         @endguest
-        <main style="background-color:rgb(242,243,255)" class="py-4">
-            <div style="background-color:rgb(242,243,255)" class="row">
+        <main  style="background-color:rgb(222,225,234)" class="py-4">
+            <div style="background-color:rgb(222,225,234)" class="row">
                 @guest
                 
                 @else
@@ -129,8 +129,7 @@
                               </ul> 
                 </div>
                 @endguest
-                <div class="col-md-9" id="contenido_principal">
-                        
+                <div  class="col-md-9" id="contenido_principal">
                     @yield('content')
                 </div>
             </div>

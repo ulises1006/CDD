@@ -4,17 +4,27 @@
         <div style="margin-top:34px;" class="col-md-12">
                 <div style="margin-right:0; margin-left:34px;" class="row">
                         <div class="col-3">        
-                           <a class="waves-effect blue darken-3 btn-large left-align white-text" onclick="window.history.back();">
-                                <i class="material-icons left">arrow_back</i>Regresar
+                           <a class="btn-floating btn-large waves-effect blue darken-3 white-text" onclick="window.history.back();">
+                                <i class="material-icons left">arrow_back</i>
                             </a>
                         </div>
                         <div class="col-9 right-align">
-                            <a class="waves-effect yellow darken-3 btn-large right-align white-text" href="http://localhost/odontograma/odontograma.php">
-                                <i class="material-icons right">add_circle</i>Registrar odontograma
-                            </a>  
-                            <a class="waves-effect blue darken-3 btn-large right-align white-text" data-toggle="modal" data-target="#modal1">
-                                <i class="material-icons right">add_circle</i>Registrar tratamiento
-                            </a>
+                            <form method="POST" name="edit_form" action="http://localhost/odontograma_clinica/odontograma.php">
+                                @csrf 
+                                <input type="hidden" name="patient_id" value="{{ $patient->id }}">                               
+                                <a style="margin-right: 15px;" class="btn-floating btn-large waves-effect orange darken-3 black-text" data-toggle="modal" data-target="#imprimir">
+                                    <i class="material-icons right">print</i>
+                                </a>
+                                <button  type="submit" class="waves-effect yellow darken-3 btn-large right-align white-text">
+                                    {{ __('Registrar Odontograma') }}
+                                </button> 
+                                <a class="waves-effect blue darken-3 btn-large right-align white-text" data-toggle="modal" data-target="#modal1">
+                                        <i class="material-icons right">add_circle</i>Registrar tratamiento
+                                    </a>
+                            </form>
+                           
+                         
+                            
                         </div>   
                     </div>
             @if(count($tratamientos) >= 1)
@@ -127,7 +137,61 @@
 
                 </div>
             </div>
-           
+            
+            <div style="width: 700px;max-height:300px;height:300px;padding-right:0px !important;padding-bottom:0;" class="modal modal_box" id="imprimir"
+            tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+            <div style="width: 700px;height:400px;padding-bottom:0;" class="modal-content">
+                <div class="modal-header" style="padding-top:0px;padding-bottom:5px;height:45px;">
+                    <h3 class="center-align">Datos de impresión de odontograma</h3>
+                    <button type="button" class="close align-right" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div>
+
+                <div style="padding-bottom:0;padding-top:29px;" class="modal-body">
+                        <form method="POST" action="{{ route('treatment.pdf') }}">
+                        @csrf
+                        <div style="margin-bottom:0;" class="row">
+
+                            <div style="margin-bottom:0;" class="row col-12">
+                                    <div class="input-field col s12">
+                                        <input type="hidden" name="patient_id" value="{{ $patient->id }}">
+                                        <input type="hidden" name="doctor_id" value="{{ $patient->doctor_id }}">
+                                        <select id="tratamiento_id" name="tratamiento_id">
+                                                <option value="" disabled selected>Tratamiento</option>
+                                                @foreach ($tratamientos as $tratamiento)
+                                                @if($tratamiento->status == 'En proceso')
+                                                <option value="{{ $tratamiento->id }}">{{ $tratamiento->name }}: {{ $tratamiento->description }}</option>
+                                                
+                                                @endif
+                                                @endforeach
+                                            </select>
+                                        @if ($errors->has('tratamiento_id'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('tratamiento_id') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                    
+                            </div>
+
+
+                            <div style="margin-bottom:0; margin-top:15px;" class="row col-12 justify-content-center">
+                                <button style="color:black;margin-right:25px;text-align:left;width:100px;height:50px;" type="button" class="waves-effect grey lighten-4 btn"
+                                    data-dismiss="modal">Cancelar</button>
+                                <button type="submit" style="width:60%; height:50px;" class="btn btn-primary blue darken-3">
+                                    {{ __('Crear pdf') }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
             <div class="row"> 
                 @foreach ($tratamientos as $tratamiento)
                 <div class="col-md-6">
@@ -214,6 +278,19 @@
                         
                     </div>
                 </div>
+                <form id="mi_form" method="POST" action="{{ route('treatment.destroyTreatment', array($tratamiento,$patient->id)) }}" name="delete_form">
+                    {{ csrf_field() }} {{ method_field('DELETE')}}
+                </form>
+                <script>
+                        function enviar_formulario() {
+                            //document.delete_form.submit();
+                            document.getElementById("mi_form").submit();
+                        }
+                        function enviar_formulario2() {
+                            document.edit_form.submit();
+                        }
+                    
+                    </script>
                 @endforeach
             </div>
                 
@@ -221,19 +298,9 @@
     </div>
     
 </div>
-<form method="POST" action="{{ route('treatment.destroyTreatment', array($tratamiento,$patient->id)) }}" name="delete_form">
-        {{ csrf_field() }} {{ method_field('DELETE')}}
-    </form>
+
 
 @endsection
 @section('foot')
-<script>
-        function enviar_formulario() {
-            document.delete_form.submit();
-        }
-        function enviar_formulario2() {
-            document.edit_form.submit();
-        }
-    
-    </script>
+
 @endsection

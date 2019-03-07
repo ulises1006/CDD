@@ -45,6 +45,7 @@ Route::group(['middleware'=>['web']], function (){
     Route::resource('/treatment', 'TreatmentController');
     Route::get('/treatment/patient/{id}','TreatmentController@indexPatient')->name('treatment.indexPatient');
     Route::delete('/treatment/patient/{treatment}/{id}','TreatmentController@destroyTreatment')->name('treatment.destroyTreatment');
+    Route::post('/pdf-odontograma/', 'TreatmentController@pdfOdontograma')->name('treatment.pdf');
 });
 
 
